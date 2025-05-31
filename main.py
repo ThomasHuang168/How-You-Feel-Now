@@ -10,17 +10,17 @@ logPath:Path = Path("responses") / datetime.now().strftime("%Y%m%d.csv")
 logPath.parent.mkdir(parents=True, exist_ok=True)
     
 logging.basicConfig(filename=str(logPath), level=logging.INFO, 
-                    format="%(asctime)s - %(message)s",)
+                    format="%(asctime)s, %(message)s", datefmt="%Y-%m-%d, %H:%M:%S")
 
 
-def show_responses():
-    with logPath.open("r")as fr:
-        logLines = fr.readlines()
-        logLines.reverse()
-        log_text["state"] = tk.NORMAL
-        log_text.delete(1.0, tk.END)
-        log_text.insert(tk.END, "".join(logLines))
-        log_text["state"] = tk.DISABLED
+# def show_responses():
+#     with logPath.open("r")as fr:
+#         logLines = fr.readlines()
+#         logLines.reverse()
+#         log_text["state"] = tk.NORMAL
+#         log_text.delete(1.0, tk.END)
+#         log_text.insert(tk.END, "".join(logLines))
+#         log_text["state"] = tk.DISABLED
 
 def save_response(feeling):
     postcode = postcode_entry.get()
@@ -34,12 +34,12 @@ def save_response(feeling):
 
     postcode = postcode.upper()
     postcode = re.sub(r'([A-Za-z]{1,2}[0-9R][0-9A-Za-z]?) ?([0-9][A-Za-z]{2})',r'\1 \2', postcode)
-    log_entry = f"Postcode: {postcode}, Feeling: {feeling}"
+    log_entry = f"{postcode}, {feeling}"
     logging.info(log_entry)
 
-    show_responses()
+    # show_responses()
     
-    # messagebox.showinfo("Success", "Response saved successfully!")
+    messagebox.showinfo("Success", "Response saved successfully!")
     postcode_entry.delete(0, tk.END)
 
 def create_circle_button(canvas:tk.Canvas, x, y, radius, color, text, command, text_color):
@@ -74,7 +74,7 @@ postcode_entry = tk.Entry(root, font=("Arial", 24))
 postcode_entry.pack()
 
 # Label for mood selection
-tk.Label(root, text="How are you now?", font=("Arial", 28)).pack(pady=40)
+tk.Label(root, text="How are you doing?", font=("Arial", 28)).pack(pady=40)
 
 # # Frame for horizontal layout of buttons
 # button_frame = tk.Frame(root)
@@ -96,12 +96,12 @@ create_circle_button(canvas, 110, 110, 100, "red", "😢 Bad", lambda: save_resp
 create_circle_button(canvas, 410, 110, 100, "yellow", "😐 Ok", lambda: save_response("Ok"), "black")
 create_circle_button(canvas, 710, 110, 100, "green", "😊 Good", lambda: save_response("Good"),"white")
 
-# Log viewer/editor
-tk.Label(root, text="Responses", font=("Arial", 20)).pack(pady=20)
-log_text = tk.Text(root, font=("Arial", 16), height=10, width=80, wrap=tk.WORD, state=tk.DISABLED)
+# # Log viewer/editor
+# tk.Label(root, text="Responses", font=("Arial", 20)).pack(pady=20)
+# log_text = tk.Text(root, font=("Arial", 16), height=10, width=80, wrap=tk.WORD, state=tk.DISABLED)
 
-log_text.pack(pady=10)
-show_responses()
+# log_text.pack(pady=10)
+# show_responses()
 
 # Run the application
 root.mainloop()
