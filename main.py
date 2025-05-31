@@ -28,11 +28,12 @@ def save_response(feeling):
     if not postcode:
         messagebox.showwarning("Input Error", "Please enter your postcode.")
         return
-    elif not re.fullmatch(r'[A-Z]{1,2}[0-9R][0-9A-Z]? [0-9][A-Z]{2}', postcode):
+    elif not re.fullmatch(r'[A-Za-z]{1,2}[0-9R][0-9A-Za-z]? ?[0-9][A-Za-z]{2}', postcode):
         messagebox.showwarning("Input Error", f"{postcode} is not a proper Postcode")
         return
 
-    
+    postcode = postcode.upper()
+    postcode = re.sub(r'([A-Za-z]{1,2}[0-9R][0-9A-Za-z]?) ?([0-9][A-Za-z]{2})',r'\1 \2', postcode)
     log_entry = f"Postcode: {postcode}, Feeling: {feeling}"
     logging.info(log_entry)
 
