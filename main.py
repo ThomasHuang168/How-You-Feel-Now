@@ -41,6 +41,23 @@ def save_response(feeling):
     # messagebox.showinfo("Success", "Response saved successfully!")
     postcode_entry.delete(0, tk.END)
 
+def create_circle_button(canvas:tk.Canvas, x, y, radius, color, text, command, text_color):
+    """Creates a circular button using the Canvas widget"""
+    circle = canvas.create_oval(x-radius, 
+                                y-radius, 
+                                x+radius, 
+                                y+radius, 
+                                fill=color, 
+                                # outline="black",
+                                )
+    label = canvas.create_text(x, y, text=text, font=("Arial", 28), fill=text_color)
+
+    def on_click(event):
+        command()
+
+    # Bind click event to the circular button
+    canvas.tag_bind(circle, "<Button-1>", on_click)
+    canvas.tag_bind(label, "<Button-1>", on_click)
 
 # Create the main window
 root = tk.Tk()
@@ -58,19 +75,25 @@ postcode_entry.pack()
 # Label for mood selection
 tk.Label(root, text="How are you now?", font=("Arial", 28)).pack(pady=40)
 
-# Frame for horizontal layout of buttons
-button_frame = tk.Frame(root)
-button_frame.pack(fill=tk.BOTH, padx=20, pady=5,)
+# # Frame for horizontal layout of buttons
+# button_frame = tk.Frame(root)
+# button_frame.pack(fill=tk.BOTH, padx=20, pady=5,)
 
 # Mood buttons with colors and emojis
-tk.Button(button_frame, text="😢 Bad", font=("Arial", 32), bg="red", fg="white", 
-          command=lambda: save_response("Bad"), width=10, height=3,).pack(side=tk.LEFT, expand=True, fill=tk.BOTH, padx=10,)
+# tk.Button(button_frame, text="😢 Bad", font=("Arial", 32), bg="red", fg="white", 
+#           command=lambda: save_response("Bad"), width=10, height=3,).pack(side=tk.LEFT, expand=True, fill=tk.BOTH, padx=10,)
 
-tk.Button(button_frame, text="😐 Ok", font=("Arial", 32), bg="yellow", fg="black", 
-          command=lambda: save_response("Ok"), width=10, height=3,).pack(side=tk.LEFT, expand=True, fill=tk.BOTH, padx=10,)
+# tk.Button(button_frame, text="😐 Ok", font=("Arial", 32), bg="yellow", fg="black", 
+#           command=lambda: save_response("Ok"), width=10, height=3,).pack(side=tk.LEFT, expand=True, fill=tk.BOTH, padx=10,)
 
-tk.Button(button_frame, text="😊 Good", font=("Arial", 32), bg="green", fg="white", 
-          command=lambda: save_response("Good"), width=10, height=3,).pack(side=tk.LEFT, expand=True, fill=tk.BOTH, padx=10,)
+# tk.Button(button_frame, text="😊 Good", font=("Arial", 32), bg="green", fg="white", 
+#           command=lambda: save_response("Good"), width=10, height=3,).pack(side=tk.LEFT, expand=True, fill=tk.BOTH, padx=10,)
+# Create canvas for circular buttons
+canvas = tk.Canvas(root, width=820, height=220)
+canvas.pack()
+create_circle_button(canvas, 110, 110, 100, "red", "😢 Bad", lambda: save_response("Bad"),"white")
+create_circle_button(canvas, 410, 110, 100, "yellow", "😐 Ok", lambda: save_response("Ok"), "black")
+create_circle_button(canvas, 710, 110, 100, "green", "😊 Good", lambda: save_response("Good"),"white")
 
 # Log viewer/editor
 tk.Label(root, text="Responses", font=("Arial", 20)).pack(pady=20)

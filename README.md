@@ -4,8 +4,8 @@ a python script collect feeling (by where they are from) with timestamp
 
 ## Updates:
 
-20250530: Init repos
+20250530: Init repos, make button circular like traffic light
 
 ## ScreenShot:
 
-![1748685000961](image/README/1748685000961.png)
+![1748687625981](image/README/1748687625981.png)
