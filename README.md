@@ -11,3 +11,7 @@ a python script collect feeling (by where they are from) with timestamp
 ## ScreenShot:
 
 ![1748687625981](image/README/1748687625981.png)
+
+## Darft:
+
+![1748952903819](image/README/1748952903819.png)
